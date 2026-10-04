@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="پروژه تعاملی پژوهشی Zero Trust در امنیت Backend، API، Database و Cloud">
+<title>ZERO TRUST // Backend × API × Database × Cloud</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+ --bg:#07111f;--panel:#0b1a2d;--panel2:#0e223a;--line:#173653;--text:#e9f5ff;--muted:#8eabc3;
+ --blue:#28a9ff;--cyan:#48e0ff;--glow:rgba(40,169,255,.25);--danger:#ff617d;--ok:#43e6a0;--warn:#ffc857;
+ --shadow:0 18px 55px rgba(0,0,0,.28)
+}
+*{box-sizing:border-box;scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 80% 0%,#103052 0,transparent 35%),linear-gradient(145deg,#06101c,#081625 60%,#06111e);color:var(--text);font-family:Vazirmatn,sans-serif;line-height:1.9}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit}
+.topbar{position:sticky;top:0;z-index:50;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 5vw;background:rgba(5,14,25,.78);backdrop-filter:blur(18px);border-bottom:1px solid rgba(72,224,255,.12)}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.3px}.logo{width:38px;height:38px;border:1px solid #2baeff;border-radius:12px;display:grid;place-items:center;color:#58dcff;box-shadow:0 0 28px var(--glow);font-family:"JetBrains Mono"}
+.badge{font-size:11px;color:#7ddfff;border:1px solid #20547b;border-radius:999px;padding:2px 9px;margin-right:7px}
+.layout{display:grid;grid-template-columns:275px minmax(0,1fr);max-width:1450px;margin:auto}
+.sidebar{position:sticky;top:68px;height:calc(100vh - 68px);padding:28px 18px;border-left:1px solid var(--line);overflow:auto}
+.navtitle{font-size:11px;color:#6687a2;letter-spacing:1.4px;margin:10px 12px}
+.nav a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:11px;color:#a9c0d3;margin:4px 0;font-size:14px;transition:.2s}
+.nav a:hover,.nav a.active{background:#0d2944;color:#fff;box-shadow:inset 3px 0 0 var(--blue)}
+.progress{padding:15px;background:#0a1c30;border:1px solid var(--line);border-radius:14px;margin-top:20px}.bar{height:7px;background:#112c45;border-radius:10px;overflow:hidden;margin-top:8px}.bar i{display:block;width:40%;height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));box-shadow:0 0 15px var(--glow)}
+.main{padding:42px 5vw 90px;min-width:0}
+.hero{min-height:520px;display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:50px}
+.eyebrow{color:#62ddff;font:600 12px "JetBrains Mono";letter-spacing:2px}
+h1{font-size:clamp(38px,6vw,78px);line-height:1.05;margin:16px 0 22px;letter-spacing:-2px}
+.gradient{background:linear-gradient(90deg,#fff,#65dfff 55%,#3b9dff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:#a6bfd1;font-size:18px;max-width:760px}
+.ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.btn{border:1px solid #22618c;padding:10px 18px;border-radius:12px;background:#0c2942;color:#dff7ff;cursor:pointer}.btn.primary{background:linear-gradient(135deg,#178de0,#21bddc);color:#04111e;border:0;font-weight:800;box-shadow:0 10px 35px var(--glow)}
+.terminal{background:#06111d;border:1px solid #194363;border-radius:18px;box-shadow:var(--shadow);overflow:hidden;transform:perspective(900px) rotateY(-4deg)}
+.terminal-head{padding:11px 15px;border-bottom:1px solid #16344c;color:#7598b0;font:12px "JetBrains Mono";display:flex;justify-content:space-between}.dots{display:flex;gap:5px}.dots i{width:8px;height:8px;border-radius:50%;background:#2b5773}
+pre{margin:0;padding:20px;overflow:auto;color:#bdeaff;font:13px/1.8 "JetBrains Mono"}.k{color:#6fe2ff}.v{color:#8ff3bb}.c{color:#7894aa}
+.section{padding:70px 0;border-top:1px solid rgba(44,86,116,.28)}
+.section-head{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:28px}.section h2{font-size:31px;margin:6px 0}.lead{color:var(--muted);max-width:760px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:linear-gradient(150deg,rgba(15,37,60,.92),rgba(7,23,39,.92));border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 10px 35px rgba(0,0,0,.12)}.card h3{margin-top:0}.card p{color:#9db6c9;font-size:14px}.tag{display:inline-block;font:11px "JetBrains Mono";color:#65dfff;background:#09283e;border:1px solid #155072;border-radius:999px;padding:3px 8px}
+.arch{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;align-items:center;margin:30px 0}.node{padding:18px 10px;text-align:center;background:#0a2036;border:1px solid #1a5277;border-radius:15px;position:relative}.node b{display:block}.node small{color:#7194aa}.arrow{text-align:center;color:#3ecbff;font-size:24px}
+.callout{padding:20px;border-radius:16px;border-right:4px solid var(--blue);background:#092039;color:#c6dfef;margin:20px 0}.callout strong{color:#fff}
+.article{max-width:920px}.article h3{font-size:22px;margin-top:38px}.article p,.article li{color:#b0c4d3}.article ul{padding-right:25px}
+.code{background:#050e17;border:1px solid #183c57;border-radius:13px;padding:15px;font:12px/1.8 "JetBrains Mono";direction:ltr;text-align:left;color:#b9ecff;overflow:auto}
+.quiz{display:grid;gap:12px}.q{padding:20px;background:#091c2e;border:1px solid var(--line);border-radius:16px}.q label{display:block;padding:8px;margin:6px 0;border-radius:8px;color:#a9c0d1;cursor:pointer}.q label:hover{background:#0d2a43}.result{font-weight:800;margin-top:12px}
+.search{width:100%;padding:13px 15px;border-radius:12px;background:#071522;border:1px solid #1c4764;color:#fff;outline:none}.search:focus{border-color:#2db9ff;box-shadow:0 0 0 3px rgba(45,185,255,.1)}
+.refs a{color:#64dfff;text-decoration:underline;text-underline-offset:3px}.footer{padding:45px 0;color:#708da5;border-top:1px solid var(--line);font-size:13px}.footer strong{color:#cdeaff}
+.mini{font-size:12px;color:#7594aa}.metric{display:flex;gap:10px;align-items:center;margin-top:15px}.metric b{font-size:27px;color:#6fe2ff}
+@media(max-width:1000px){.layout{display:block}.sidebar{position:static;height:auto;border-left:0;border-bottom:1px solid var(--line);display:flex;gap:15px;overflow:auto}.sidebar .progress{display:none}.nav{display:flex;white-space:nowrap}.navtitle{display:none}.hero{grid-template-columns:1fr}.terminal{transform:none}.grid{grid-template-columns:1fr 1fr}.arch{grid-template-columns:1fr}.arrow{transform:rotate(90deg)}}
+@media(max-width:650px){.main{padding:25px 18px 70px}.topbar{padding:0 18px}.hero{min-height:auto;padding:45px 0}.grid{grid-template-columns:1fr}h1{font-size:43px}.brand .badge{display:none}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#home"><span class="logo">&gt;_</span><span>ZERO<span style="color:#54dcff">TRUST</span></span><span class="badge">RESEARCH 0.4</span></a>
+  <button class="btn" onclick="toggleMode()">◐ حالت مطالعه</button>
+</header>
+
+<div class="layout">
+<aside class="sidebar">
+  <div>
+    <div class="navtitle">NAVIGATION</div>
+    <nav class="nav">
+      <a href="#home" class="active">⌂ نمای کلی</a>
+      <a href="#why">01 چرا Zero Trust؟</a>
+      <a href="#identity">02 هویت سرویس‌ها</a>
+      <a href="#least">03 Least Privilege</a>
+      <a href="#api">04 امنیت API</a>
+      <a href="#db">05 Database Access</a>
+      <a href="#cloud">06 Microservices & Cloud</a>
+      <a href="#lab">07 Security Lab</a>
+      <a href="#quiz">08 آزمون سریع</a>
+      <a href="#attack">09 شبیه‌سازی حمله</a><a href="#timeline">10 مسیر توسعه</a><a href="#glossary">11 واژه‌نامه</a><a href="#refs">منابع</a>
+    </nav>
+    <div class="progress">
+      <div class="mini">وضعیت مطالعه</div><b id="progressText">0%</b>
+      <div class="bar"><i id="progressBar"></i></div>
+    </div>
+  </div>
+</aside>
+
+<main class="main" id="home">
+<section class="hero">
+  <div>
+    <div class="eyebrow">BACKEND × DATABASE × CLOUD SECURITY</div>
+    <h1>به شبکه اعتماد نکن.<br><span class="gradient">به هویت اعتماد کن.</span></h1>
+    <p>یک مقاله‌ی تعاملی درباره‌ی Zero Trust و اینکه چطور هویت، مجوز، API و دسترسی دیتابیس می‌توانند در معماری‌های Backend و Cloud کنار هم قرار بگیرند.</p>
+    <div class="ctas"><a class="btn primary" href="#why">شروع مطالعه ←</a><a class="btn" href="#lab">ورود به آزمایشگاه</a></div>
+    <div class="metric"><b>40%</b><span class="mini">نسخه‌ی فعلی محتوا — عمداً ناقص و قابل توسعه</span></div>
+  </div>
+  <div class="terminal">
+    <div class="terminal-head"><span>zero-trust/policy.yaml</span><span class="dots"><i></i><i></i><i></i></span></div>
+<pre><span class="c"># implicit trust = disabled</span>
+<span class="k">request</span>:
+  <span class="k">subject</span>: <span class="v">service:orders</span>
+  <span class="k">resource</span>: <span class="v">db:payments</span>
+  <span class="k">action</span>: <span class="v">read</span>
+
+<span class="k">policy</span>:
+  <span class="k">authenticate</span>: <span class="v">required</span>
+  <span class="k">authorize</span>: <span class="v">per_request</span>
+  <span class="k">scope</span>: <span class="v">minimum</span>
+
+<span class="c"># allow only what is needed.</span></pre>
+  </div>
+</section>
+
+<section class="section" id="why">
+<div class="section-head"><div><span class="tag">01 / CONCEPT</span><h2>Zero Trust دقیقاً چه می‌گوید؟</h2></div></div>
+<div class="callout"><strong>اصل ساده:</strong> صرف اینکه یک کاربر، سرویس یا دستگاه «داخل شبکه» است، نباید باعث شود به آن اعتماد ضمنی کنیم. NIST در معماری Zero Trust تمرکز را از محیط شبکه به منابع، هویت‌ها و سیاست‌های دسترسی منتقل می‌کند.</div>
+<div class="grid">
+<div class="card"><h3>Never Trust</h3><p>موقعیت شبکه به‌تنهایی مدرک اعتماد نیست. یک سرویس داخلی هم باید هنگام درخواست دسترسی قابل شناسایی و ارزیابی باشد.</p></div>
+<div class="card"><h3>Verify Explicitly</h3><p>هویت و شرایط دسترسی قبل از اعطای دسترسی بررسی می‌شوند؛ احراز هویت و مجوزدهی دو مفهوم جدا هستند.</p></div>
+<div class="card"><h3>Protect Resources</h3><p>هدف نهایی فقط «محافظت از شبکه» نیست؛ API، سرویس، دیتابیس و داده خودِ منابعی هستند که باید محافظت شوند.</p></div>
+</div>
+</section>
+
+<section class="section" id="identity">
+<div class="section-head"><div><span class="tag">02 / SERVICE IDENTITY</span><h2>وقتی سرویس‌ها هم هویت دارند</h2><p class="lead">در معماری Microservices، فقط انسان‌ها نیستند که درخواست ارسال می‌کنند. سرویس A ممکن است به سرویس B درخواست بدهد و این ارتباط باید قابل شناسایی و سیاست‌گذاری باشد.</p></div></div>
+<div class="arch">
+<div class="node">👤<b>User</b><small>Identity</small></div><div class="arrow">←</div>
+<div class="node">🔐<b>API Gateway</b><small>Policy Point</small></div><div class="arrow">←</div>
+<div class="node">⚙️<b>Orders Service</b><small>Service Identity</small></div>
+</div>
+<div class="grid">
+<div class="card"><h3>Authentication</h3><p>«تو کی هستی؟» — بررسی هویت کاربر یا سرویس.</p></div>
+<div class="card"><h3>Authorization</h3><p>«چه کاری اجازه داری انجام بدهی؟» — بررسی مجوز نسبت به یک منبع مشخص.</p></div>
+<div class="card"><h3>Policy</h3><p>تصمیم دسترسی می‌تواند به هویت، منبع، عمل و context وابسته باشد.</p></div>
+</div>
+</section>
+
+<section class="section" id="least">
+<div class="section-head"><div><span class="tag">03 / ACCESS CONTROL</span><h2>Least Privilege؛ فقط همان‌قدر که لازم است</h2><p class="lead">اگر یک سرویس فقط باید سفارش‌ها را بخواند، چرا باید بتواند جدول کاربران را حذف کند؟ کمینه‌سازی مجوز، دامنه‌ی آسیب یک حساب یا سرویس compromised شده را کاهش می‌دهد.</p></div></div>
+<div class="code">-- Bad idea
+GRANT ALL PRIVILEGES ON *.* TO 'orders';
+
+-- Better direction
+GRANT SELECT ON shop.orders TO 'orders';
+
+-- حتی بهتر: مجوز را بر اساس نیاز واقعی و سیاست محیط محدود کن.</div>
+<div class="callout"><strong>نکته:</strong> Least Privilege یک «دستور SQL» نیست؛ یک اصل طراحی است که باید از API تا سرویس و تا دیتابیس دنبال شود.</div>
+</section>
+
+<section class="section" id="api">
+<div class="section-head"><div><span class="tag">04 / API SECURITY</span><h2>API؛ دروازه‌ای که نباید فقط قفل داشته باشد</h2><p class="lead">APIها منطق برنامه و داده‌های حساس را در معرض درخواست قرار می‌دهند. در OWASP API Security Top 10، مشکلات Authorization جایگاه مهمی دارند.</p></div></div>
+<div class="grid">
+<div class="card"><h3>Object-Level Authorization</h3><p>داشتن یک توکن معتبر به این معنی نیست که کاربر باید بتواند هر object ID را بخواند.</p></div>
+<div class="card"><h3>Broken Authentication</h3><p>احراز هویت ناقص می‌تواند هویت درخواست‌کننده را قابل سوءاستفاده کند.</p></div>
+<div class="card"><h3>Resource Consumption</h3><p>Rate limiting و کنترل مصرف منابع در برابر درخواست‌های بیش از حد اهمیت پیدا می‌کند.</p></div>
+<div class="card"><h3>SSRF</h3><p>یک API که URL دریافتی را بدون کنترل به مقصدهای داخلی می‌فرستد، می‌تواند سطح حمله ایجاد کند.</p></div>
+<div class="card"><h3>Security Misconfiguration</h3><p>تنظیمات ناامن، endpointهای debug و پیکربندی‌های اضافی می‌توانند مسیر حمله بسازند.</p></div>
+<div class="card"><h3>Inventory</h3><p>اگر ندانیم چه endpointها و نسخه‌هایی فعال‌اند، نمی‌توانیم به‌درستی از آن‌ها محافظت کنیم.</p></div>
+</div>
+</section>
+
+<section class="section" id="db">
+<div class="section-head"><div><span class="tag">05 / DATABASE</span><h2>Zero Trust تا داخل دیتابیس</h2><p class="lead">یک معماری امن نباید بعد از API متوقف شود. حتی اگر درخواست از یک سرویس معتبر آمده باشد، دسترسی دیتابیس باید محدود، قابل حسابرسی و متناسب با نیاز باشد.</p></div></div>
+<div class="arch">
+<div class="node">API<br><small>request</small></div><div class="arrow">→</div><div class="node">Service<br><small>identity</small></div><div class="arrow">→</div><div class="node">DB<br><small>policy + role</small></div>
+</div>
+<ul class="article">
+<li>حساب‌های سرویس را از حساب‌های انسانی جدا کن.</li>
+<li>مجوزهای database را به نیاز واقعی سرویس محدود کن.</li>
+<li>دسترسی‌های حساس را قابل ثبت و audit کن.</li>
+<li>رازها و credentialها را hard-code نکن و چرخه‌ی عمرشان را مدیریت کن.</li>
+</ul>
+</section>
+
+<section class="section" id="cloud">
+<div class="section-head"><div><span class="tag">06 / CLOUD NATIVE</span><h2>Microservices و Cloud؛ جایی که Zero Trust جدی‌تر می‌شود</h2><p class="lead">در محیط‌های Cloud و Microservices، مرز شبکه مثل گذشته ثابت نیست. NIST در SP 800-207A نیز بر هویت‌های application و service در کنار هویت کاربر تأکید می‌کند.</p></div></div>
+<div class="grid">
+<div class="card"><h3>Service → Service</h3><p>ارتباط داخلی هم باید هویت و سیاست داشته باشد؛ «داخل VPC بودن» به‌تنهایی کافی نیست.</p></div>
+<div class="card"><h3>Policy as Code</h3><p>بخشی از سیاست‌های دسترسی را می‌توان به شکل قابل بررسی و تکرارپذیر در چرخه توسعه وارد کرد.</p></div>
+<div class="card"><h3>Observe & Audit</h3><p>دسترسی را فقط مجاز یا رد نکن؛ ثبت رویدادها برای فهم رفتار سیستم و بررسی رخدادها مهم است.</p></div>
+</div>
+</section>
+
+<section class="section" id="lab">
+<div class="section-head"><div><span class="tag">07 / SECURITY LAB</span><h2>آزمایشگاه تصمیم‌گیری</h2><p class="lead">در هر سناریو انتخاب کن کدام طراحی بیشتر با Zero Trust هم‌راستاست.</p></div></div>
+<div class="grid">
+<div class="card"><h3>سناریو A</h3><p>سرویس Orders داخل شبکه است؛ برای راحتی، دسترسی کامل به دیتابیس دارد.</p><button class="btn" onclick="lab(this,false)">بررسی</button><p class="mini feedback"></p></div>
+<div class="card"><h3>سناریو B</h3><p>سرویس Orders هویت مشخص دارد و فقط SELECT روی منابع موردنیازش مجاز است.</p><button class="btn" onclick="lab(this,true)">بررسی</button><p class="mini feedback"></p></div>
+<div class="card"><h3>سناریو C</h3><p>API توکن معتبر دارد، اما هر کاربر می‌تواند object ID کاربران دیگر را هم درخواست کند.</p><button class="btn" onclick="lab(this,false)">بررسی</button><p class="mini feedback"></p></div>
+</div>
+</section>
+
+<section class="section" id="quiz">
+<div class="section-head"><div><span class="tag">08 / QUICK CHECK</span><h2>آزمون ۳ سوالی</h2></div></div>
+<div class="quiz">
+<div class="q"><b>۱. کدام جمله به Zero Trust نزدیک‌تر است؟</b>
+<label><input type="radio" name="q1" value="1"> هر چیزی داخل شبکه قابل اعتماد است.</label>
+<label><input type="radio" name="q1" value="0"> هر درخواست باید بر اساس هویت و سیاست بررسی شود.</label></div>
+<div class="q"><b>۲. Least Privilege یعنی چه؟</b>
+<label><input type="radio" name="q2" value="0"> همه سرویس‌ها admin باشند.</label>
+<label><input type="radio" name="q2" value="1"> هر هویت فقط مجوزهای لازم برای کارش را داشته باشد.</label></div>
+<div class="q"><b>۳. کدام مورد یک مشکل API Security است؟</b>
+<label><input type="radio" name="q3" value="1"> Broken Object Level Authorization</label>
+<label><input type="radio" name="q3" value="0"> داشتن مستندات API</label></div>
+<button class="btn primary" onclick="quiz()">محاسبه نتیجه</button>
+<div id="quizResult" class="result"></div>
+</div>
+</section>
+
+
+<section class="section" id="attack">
+<div class="section-head"><div><span class="tag">09 / ATTACK SIMULATION</span><h2>درخواست مشکوک؛ چه اتفاقی می‌افتد؟</h2>
+<p class="lead">یک شبیه‌سازی کوچک از مسیر یک درخواست API. بین حالت سنتی و Zero Trust جابه‌جا شو و ببین هر لایه چه تصمیمی می‌گیرد.</p></div></div>
+
+<div class="card">
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px">
+    <button class="btn primary" id="traditionalBtn" onclick="setSim('traditional')">Traditional</button>
+    <button class="btn" id="ztBtn" onclick="setSim('zt')">Zero Trust</button>
+  </div>
+  <div class="arch" id="simNodes">
+    <div class="node" id="sim1">🌐<b>Client</b><small>request</small></div>
+    <div class="arrow">→</div>
+    <div class="node" id="sim2">🚪<b>API</b><small>gateway</small></div>
+    <div class="arrow">→</div>
+    <div class="node" id="sim3">⚙️<b>Service</b><small>identity</small></div>
+    <div class="arrow">→</div>
+    <div class="node" id="sim4">🗄️<b>Database</b><small>resource</small></div>
+  </div>
+  <div class="callout" id="simResult"><strong>Traditional:</strong> اگر درخواست از یک مسیر مورد اعتماد وارد شده باشد، ممکن است کنترل‌های داخلی کافی نباشند.</div>
+</div>
+
+<div class="grid" style="margin-top:16px">
+  <div class="card"><span class="tag">REQUEST</span><h3>GET /api/orders/481</h3><p>Token: valid ✓<br>User: ali<br>Object owner: sara</p></div>
+  <div class="card"><span class="tag">POLICY</span><h3>Object-level auth</h3><p>توکن معتبر است، اما اعتبار توکن به‌تنهایی مالکیت object را ثابت نمی‌کند.</p></div>
+  <div class="card"><span class="tag">DECISION</span><h3>403 Forbidden</h3><p>در مدل درست، درخواست احراز هویت‌شده می‌تواند همچنان مجاز نباشد.</p></div>
+</div>
+</section>
+
+<section class="section" id="timeline">
+<div class="section-head"><div><span class="tag">10 / ROADMAP</span><h2>مسیر تکامل این مقاله</h2><p class="lead">این سایت قرار نیست یک‌باره تمام شود؛ هر یافته‌ی جدید می‌تواند به یک نسخه‌ی تازه تبدیل شود.</p></div></div>
+<div class="grid">
+  <div class="card"><span class="tag">V0.4 / NOW</span><h3>Foundation</h3><p>Zero Trust، Service Identity، Least Privilege، API Security، Database Access و Cloud.</p></div>
+  <div class="card"><span class="tag">V0.5 / NEXT</span><h3>Identity Deep Dive</h3><p>mTLS، workload identity، JWT، OAuth 2.0، token lifecycle و تفاوت Authentication/Authorization.</p></div>
+  <div class="card"><span class="tag">V0.6 / NEXT</span><h3>Database Lab</h3><p>Role-based access، row-level security، secrets، auditing و سناریوهای واقعی‌تر دیتابیس.</p></div>
+  <div class="card"><span class="tag">V0.7 / NEXT</span><h3>Cloud Native</h3><p>Kubernetes، service mesh، policy enforcement و کنترل دسترسی در معماری توزیع‌شده.</p></div>
+  <div class="card"><span class="tag">V0.8 / NEXT</span><h3>Threat Modeling</h3><p>دارایی‌ها، trust boundary، attack path و طراحی دفاع در برابر چند سناریوی حمله.</p></div>
+  <div class="card"><span class="tag">V1.0 / GOAL</span><h3>Research Edition</h3><p>مقاله‌ی کامل‌تر با منابع بیشتر، case study، نمودارهای معماری و آزمایشگاه‌های تعاملی.</p></div>
+</div>
+</section>
+
+<section class="section" id="glossary">
+<div class="section-head"><div><span class="tag">11 / GLOSSARY</span><h2>واژه‌نامه سریع</h2></div></div>
+<input class="search" id="glossarySearch" oninput="filterGlossary()" placeholder="مثلاً بنویس: privilege یا API ...">
+<div class="grid" id="glossaryGrid" style="margin-top:16px">
+  <div class="card term"><h3>Zero Trust</h3><p>مدلی که اعتماد ضمنی را حذف و دسترسی را بر اساس هویت و سیاست بررسی می‌کند.</p></div>
+  <div class="card term"><h3>Least Privilege</h3><p>اعطای حداقل سطح دسترسی موردنیاز برای انجام یک وظیفه.</p></div>
+  <div class="card term"><h3>Workload Identity</h3><p>هویت قابل استفاده برای یک workload یا سرویس در محیط‌های Cloud Native.</p></div>
+  <div class="card term"><h3>RBAC</h3><p>کنترل دسترسی مبتنی بر نقش؛ مجوزها از طریق roleها مدیریت می‌شوند.</p></div>
+  <div class="card term"><h3>mTLS</h3><p>احراز هویت دوطرفه TLS که در آن هر دو سمت ارتباط هویت خود را ارائه می‌کنند.</p></div>
+  <div class="card term"><h3>Audit Log</h3><p>ثبت رویدادهای مهم برای بررسی، تشخیص و پاسخ به رخدادهای امنیتی.</p></div>
+</div>
+</section>
+
+<section class="section" id="refs">
+<div class="section-head"><div><span class="tag">SOURCES</span><h2>منابع و ادامه مسیر</h2><p class="lead">این نسخه عمداً یک شروع پژوهشی است. در نسخه‌های بعدی می‌توانیم منابع تخصصی‌تر، مثال‌های واقعی، نمودارهای معماری، کد و case study اضافه کنیم.</p></div></div>
+<div class="card refs">
+<p>• <a href="https://csrc.nist.gov/pubs/sp/800/207/final" target="_blank">NIST SP 800-207 — Zero Trust Architecture</a></p>
+<p>• <a href="https://csrc.nist.gov/pubs/sp/800/207/a/final" target="_blank">NIST SP 800-207A — Cloud-Native Access Control</a></p>
+<p>• <a href="https://owasp.org/www-project-api-security/" target="_blank">OWASP API Security Project</a></p>
+<p>• <a href="https://api-security.owasp.org/editions/2023/en/0x11-t10/" target="_blank">OWASP API Security Top 10 — 2023</a></p>
+</div>
+</section>
+
+<footer class="footer">
+<strong>ساخته شده توسط ایلیا محمدی</strong><br>
+گردآورندگان: ایلیا محمدی و هستی جاوید<br><br>
+نسخه پژوهشی 0.4 — این سایت یک پروژه آموزشی است و با اضافه شدن منابع و یافته‌های جدید، تکمیل خواهد شد.
+</footer>
+</main>
+</div>
+
+<script>
+const links=[...document.querySelectorAll('.nav a')];
+const sections=[...document.querySelectorAll('main section[id]')];
+const seen=new Set();
+const observer=new IntersectionObserver(entries=>{
+ entries.forEach(e=>{if(e.isIntersecting){seen.add(e.target.id);links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id));updateProgress();}});
+},{rootMargin:'-25% 0px -60% 0px'});
+sections.forEach(s=>observer.observe(s));
+function updateProgress(){let p=Math.min(100,Math.round(seen.size/sections.length*100));document.getElementById('progressText').textContent=p+'%';document.getElementById('progressBar').style.width=p+'%';localStorage.setItem('zt-progress',p)}
+function toggleMode(){document.body.classList.toggle('study'); if(document.body.classList.contains('study')) document.body.style.setProperty('--bg','#eef7ff'); else document.body.style.removeProperty('--bg');}
+function lab(btn,ok){let f=btn.parentElement.querySelector('.feedback');f.textContent=ok?'✓ انتخاب بهتر: هویت مشخص + حداقل مجوز.':'✕ این طراحی بیش از حد اعتماد یا مجوز ایجاد می‌کند.';f.style.color=ok?'#43e6a0':'#ff8ba0'}
+function quiz(){let score=0;for(let i=1;i<=3;i++){let x=document.querySelector('input[name=q'+i+']:checked');if(x)score+=+x.value}document.getElementById('quizResult').textContent='امتیاز شما: '+score+'/3 — '+(score===3?'عالی؛ اصول پایه را گرفتی.':score>=2?'خوبه؛ دو قدم دیگر تا تسلط.':'یک بار دیگر بخش‌های بالا را مرور کن.')}
+const old=localStorage.getItem('zt-progress'); if(old){document.getElementById('progressText').textContent=old+'%';document.getElementById('progressBar').style.width=old+'%'}
+
+function setSim(mode){
+  const result=document.getElementById('simResult');
+  document.getElementById('traditionalBtn').classList.toggle('primary',mode==='traditional');
+  document.getElementById('ztBtn').classList.toggle('primary',mode==='zt');
+  if(mode==='zt'){
+    result.innerHTML='<strong>Zero Trust:</strong> هویت Client بررسی می‌شود → مجوز API بررسی می‌شود → هویت Service اعتبارسنجی می‌شود → سیاست Database اعمال می‌شود → فقط در صورت عبور از همه کنترل‌ها دسترسی داده می‌شود.';
+  }else{
+    result.innerHTML='<strong>Traditional:</strong> اتکا به مرز شبکه یا یک توکن معتبر می‌تواند باعث شود کنترل‌های دقیق روی resource و service کمتر شوند.';
+  }
+}
+function filterGlossary(){
+  const q=document.getElementById('glossarySearch').value.trim().toLowerCase();
+  document.querySelectorAll('#glossaryGrid .term').forEach(x=>x.style.display=x.innerText.toLowerCase().includes(q)?'block':'none');
+}
+
+</script>
+</body>
+</html>
